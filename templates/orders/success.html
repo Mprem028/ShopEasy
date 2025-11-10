@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center py-20">
+  <h1 class="text-3xl font-bold text-green-600 mb-4">✅ Order Successful!</h1>
+  <p class="text-gray-600 mb-8">Thank you for shopping with ShopEasy.</p>
+
+  <a href="{% url 'product_list' %}"
+     class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
+     Continue Shopping
+  </a>
+</div>
+
+{% block scripts %}
+<script>
+  // ✅ Clear localStorage cart after successful order
+  localStorage.removeItem('cart');
+
+  // Optional: Reset cart badge to 0
+  const badge = document.getElementById('cart-count');
+  if (badge) badge.innerText = 0;
+
+  console.log("🛒 Cart cleared after order success!");
+</script>
+{% endblock %}
+{% endblock %}

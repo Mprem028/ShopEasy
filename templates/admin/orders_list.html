@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-indigo-600 mb-4 md:mb-0">
+      Manage Orders
+    </h1>
+    <div class="flex space-x-2">
+      <form method="GET" action="{% url 'orders:admin_orders' %}">
+        <input
+          type="text"
+          name="q"
+          value="{{ request.GET.q }}"
+          placeholder="Search by Order ID or Email"
+          class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400"
+        />
+        <button
+          type="submit"
+          class="ml-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+        >
+          Search
+        </button>
+      </form>
+      <form method="POST" action="{% url 'orders:admin_export_csv' %}">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+        >
+          Export CSV
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap items-center gap-3 mb-6">
+    <form method="GET" class="flex items-center space-x-3">
+      <label class="font-medium text-gray-600">Status:</label>
+      <select
+        name="status"
+        onchange="this.form.submit()"
+        class="border border-gray-300 rounded-lg p-2"
+      >
+        <option value="">All</option>
+        <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+        <option value="Processing" {% if request.GET.status == "Processing" %}selected{% endif %}>Processing</option>
+        <option value="Shipped" {% if request.GET.status == "Shipped" %}selected{% endif %}>Shipped</option>
+        <option value="Delivered" {% if request.GET.status == "Delivered" %}selected{% endif %}>Delivered</option>
+        <option value="Cancelled" {% if request.GET.status == "Cancelled" %}selected{% endif %}>Cancelled</option>
+      </select>
+    </form>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+      <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
+        <tr>
+          <th class="py-3 px-4 text-left">Order ID</th>
+          <th class="py-3 px-4 text-left">Customer</th>
+          <th class="py-3 px-4 text-left">Total</th>
+          <th class="py-3 px-4 text-left">Status</th>
+          <th class="py-3 px-4 text-left">Date</th>
+          <th class="py-3 px-4 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr class="border-t hover:bg-gray-50">
+          <td class="py-3 px-4 font-semibold text-gray-800">#{{ order.id }}</td>
+          <td class="py-3 px-4 text-gray-700">{{ order.user.username }}</td>
+          <td class="py-3 px-4 font-medium text-gray-900">₹{{ order.total }}</td>
+          <td class="py-3 px-4">
+            {% if order.status == "Pending" %}
+              <span class="text-yellow-500 font-medium">Pending</span>
+            {% elif order.status == "Processing" %}
+              <span class="text-blue-500 font-medium">Processing</span>
+            {% elif order.status == "Shipped" %}
+              <span class="text-indigo-500 font-medium">Shipped</span>
+            {% elif order.status == "Delivered" %}
+              <span class="text-green-600 font-medium">Delivered</span>
+            {% else %}
+              <span class="text-red-500 font-medium">Cancelled</span>
+            {% endif %}
+          </td>
+          <td class="py-3 px-4 text-gray-600">
+            {{ order.created_at|date:"M d, Y H:i" }}
+          </td>
+          <td class="py-3 px-4 text-center">
+            <a href="{% url 'orders:admin_order_detail' order.id %}"
+               class="text-indigo-600 hover:text-indigo-800 font-medium transition">
+              View
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="py-6 text-center text-gray-500 italic">
+            No orders found.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-6 flex justify-center">
+    <div class="flex space-x-2">
+      {% if orders.has_previous %}
+        <a href="?page={{ orders.previous_page_number }}" 
+           class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">&laquo; Prev</a>
+      {% endif %}
+
+      <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded">
+        Page {{ orders.number }} of {{ orders.paginator.num_pages }}
+      </span>
+
+      {% if orders.has_next %}
+        <a href="?page={{ orders.next_page_number }}" 
+           class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next &raquo;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

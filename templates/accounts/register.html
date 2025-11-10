@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center text-purple-700">Create Account</h2>
+
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="bg-red-500 text-white text-center p-3 mb-4 rounded">
+            {{ msg }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label class="block text-gray-600">Username</label>
+            <input type="text" name="username" value="{{ form.username.value|default_if_none:'' }}"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required>
+        </div>
+
+        <div>
+            <label class="block text-gray-600">Email</label>
+            <input type="email" name="email" value="{{ form.email.value|default_if_none:'' }}"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required>
+        </div>
+
+        <div>
+            <label class="block text-gray-600">Password</label>
+            <input type="password" name="password1"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required>
+        </div>
+
+        <div>
+            <label class="block text-gray-600">Confirm Password</label>
+            <input type="password" name="password2"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required>
+        </div>
+
+        <button type="submit"
+            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+            Register
+        </button>
+    </form>
+
+    <p class="mt-4 text-center text-gray-500 text-sm">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-purple-600 hover:underline">Login</a>
+    </p>
+</div>
+{% endblock %}

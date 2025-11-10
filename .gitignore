@@ -1,0 +1,94 @@
+# =========================
+# Django + Python + MySQL
+# =========================
+
+# Environment
+.env
+.env.local
+.env.production
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+eco/
+Scripts/
+pip-wheel-metadata/
+
+# Django-specific
+db.sqlite3
+media/
+staticfiles/
+static_root/
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Migrations (optional — uncomment if you don’t want to track them)
+# */migrations/
+
+# IDE and editor junk
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# MySQL dumps or backups
+*.sql
+*.bak
+*.dump
+
+# VSCode local settings
+.vscode/
+*.code-workspace
+
+# OS junk
+ehthumbs.db
+Icon?
+Desktop.ini

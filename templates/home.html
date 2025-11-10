@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="bg-gray-50 text-gray-800">
+  <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+    <h1 class="text-5xl font-bold text-purple-700 mb-4">Welcome to ShopEasy 🛍️</h1>
+    <p class="text-lg text-gray-600 mb-8">
+      Discover the best in Electronics, Fashion, and Beauty — all in one place!
+      Enjoy exclusive deals, fast delivery, and an effortless shopping experience.
+    </p>
+
+    <div class="flex justify-center space-x-4 mb-12">
+      <a href="{% url 'login' %}" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">Login</a>
+      <a href="{% url 'register' %}" class="border border-purple-600 text-purple-600 px-6 py-3 rounded-lg hover:bg-purple-100 transition">Register</a>
+      <a href="{% url 'product_list' %}" class="text-gray-700 px-6 py-3 hover:underline">Shop Now →</a>
+    </div>
+
+    <h2 class="text-3xl font-semibold text-purple-700 mb-6">Shop by Category</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Electronics -->
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4">
+        <img src="/media/products/Electronics.jpg" alt="Electronics"
+             class="rounded-xl w-full h-64 object-cover mb-4 hover:scale-105 transition-transform duration-300">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Electronics</h3>
+        <p class="text-gray-500 mb-4">Latest gadgets, smart devices, and more.</p>
+        <a href="{% url 'product_list' %}" class="text-purple-600 hover:underline">Shop Electronics →</a>
+      </div>
+
+      <!-- Clothes -->
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4">
+        <img src="/media/products/Clothes.jpg" alt="Clothes"
+             class="rounded-xl w-full h-64 object-cover mb-4 hover:scale-105 transition-transform duration-300">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Clothing</h3>
+        <p class="text-gray-500 mb-4">Trendy styles and comfortable wear for everyone.</p>
+        <a href="{% url 'product_list' %}" class="text-purple-600 hover:underline">Shop Clothing →</a>
+      </div>
+
+      <!-- Beauty -->
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4">
+        <img src="/media/products/beauty.jpg" alt="Beauty"
+             class="rounded-xl w-full h-64 object-cover mb-4 hover:scale-105 transition-transform duration-300">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Beauty</h3>
+        <p class="text-gray-500 mb-4">Skincare, cosmetics, and wellness essentials.</p>
+        <a href="{% url 'product_list' %}" class="text-purple-600 hover:underline">Shop Beauty →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
