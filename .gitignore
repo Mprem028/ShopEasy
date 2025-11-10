@@ -22,14 +22,7 @@ pip-wheel-metadata/
 
 # Django-specific
 db.sqlite3
-media/
-staticfiles/
-static_root/
-*.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
+
 
 # Migrations (optional — uncomment if you don’t want to track them)
 # */migrations/
