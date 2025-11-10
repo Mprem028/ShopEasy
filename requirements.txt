@@ -3,3 +3,5 @@ mysqlclient
 python-dotenv
 Pillow
 whitenoise
+
+
