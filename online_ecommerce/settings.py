@@ -23,7 +23,8 @@ load_dotenv(BASE_DIR/ '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c5ip_++1zsgwcv-o^5p$!8qtx(8oj^hthq^t_rt%cjik2m%5t2'
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
@@ -101,16 +102,15 @@ WSGI_APPLICATION = 'online_ecommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_ecommerce',
-        'USER': 'ecommerce_user',
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST", "localhost"),
+        'PORT': os.getenv("DB_PORT", "3306"),
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
+
 
 
 
