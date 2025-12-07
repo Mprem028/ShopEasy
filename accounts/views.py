@@ -27,7 +27,12 @@ def register_view(request):
 def login_view(request):
     if request.user.is_authenticated:
         # 👇 Redirect logged-in users away from login page
-        if getattr(request.user, 'role', '') == 'admin':
+        if (
+            request.user.is_superuser or
+            request.user.is_staff or
+            getattr(request.user, 'role', '') == 'admin'
+        ):
+
             return redirect('admin_dashboard')
         return redirect('home')
 
@@ -38,7 +43,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            if user.is_superuser or getattr(user, 'role', '') == 'admin':
+            if user.is_superuser  or user.is_staff or getattr(user, 'role', '') == 'admin':
                 messages.success(request, f'Welcome back Admin {user.username}!')
                 return redirect('admin_dashboard')
             else:

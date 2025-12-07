@@ -36,21 +36,30 @@
 
 <!-- Chart.js Script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  const totalOrders   = {{ total_orders|default:0 }};
+  const pendingOrders = {{ pending_orders|default:0 }};
+  const totalProducts = {{ total_products|default:0 }};
+  const revenue       = {{ revenue|default:0 }}; // in ₹
+
+  // Show revenue in thousands so scale is similar to counts
+  const revenueInK = Math.round(revenue / 1000);
+
   const ctx = document.getElementById('dashboardChart').getContext('2d');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Total Orders', 'Pending Orders', 'Products', 'Revenue (₹)'],
+      labels: ['Total Orders', 'Pending Orders', 'Products', 'Revenue (₹ in K)'],
       datasets: [{
         label: 'E-commerce Overview',
-        data: [{{ total_orders }}, {{ pending_orders }}, {{ total_products }}, {{ revenue|floatformat:0 }}],
+        data: [totalOrders, pendingOrders, totalProducts, revenueInK],
         backgroundColor: [
-          'rgba(99, 102, 241, 0.7)',   // Indigo
-          'rgba(250, 204, 21, 0.7)',   // Yellow
-          'rgba(34, 197, 94, 0.7)',    // Green
-          'rgba(244, 114, 182, 0.7)'   // Pink
+          'rgba(99, 102, 241, 0.7)',
+          'rgba(250, 204, 21, 0.7)',
+          'rgba(34, 197, 94, 0.7)',
+          'rgba(244, 114, 182, 0.7)'
         ],
         borderColor: [
           'rgba(99, 102, 241, 1)',
@@ -66,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
       responsive: true,
       maintainAspectRatio: false,
       animation: {
-        duration: 1500,       // 🎬 smooth rise animation duration (in ms)
-        easing: 'easeOutBounce' // 💫 nice smooth bounce effect
+        duration: 1500,
+        easing: 'easeOutBounce'
       },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: { color: '#4B5563', stepSize: 1 }
+          ticks: { color: '#4B5563' }   // let Chart.js choose step size
         },
         x: {
           ticks: { color: '#4B5563' }
@@ -90,5 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
 
 {% endblock %}

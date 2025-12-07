@@ -107,8 +107,9 @@ def admin_product_edit(request, pk):
 def admin_product_delete(request, pk):
     """Admin: soft delete a product (set is_deleted=True)"""
     prod = get_object_or_404(Product, pk=pk)
-    prod.is_deleted = True
-    prod.save()
+    # prod.is_deleted = True
+    # prod.save()
+    prod.delete()
     messages.warning(request, f'🗑 Product "{prod.name}" has been marked as deleted.')
     return redirect('admin_products')
 

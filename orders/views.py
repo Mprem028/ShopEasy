@@ -152,7 +152,13 @@ def order_success(request, pk):
     return render(request,'orders/success.html', {'order':order})
 
 def admin_check(user):
-    return user.is_authenticated and getattr(user, 'role', '') == 'admin'
+    return (
+        user.is_authenticated and (
+            user.is_superuser or
+            user.is_staff or
+            getattr(user, 'role', '') == 'admin'
+        )
+    )
 
 @user_passes_test(admin_check, login_url='login')
 def admin_orders(request):
